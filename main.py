@@ -1,11 +1,16 @@
 import sys
 import argparse
-from hubble.base.db_executor import DbExecutor, MySqlExecutor
 from hubble.migrations.data.mysql_data_migration import MySqlDataMigration
 from hubble.migrations.tables.mysql_table_migration import MySqlTableMigration
 
 from hubble.exceptions import NoArgsException
 from hubble.base.db import MySqlConnection
+import os
+import dotenv
+
+
+dotenv.load_dotenv()
+
 
 def get_args(args):
     if len(args) == 0:
@@ -25,11 +30,11 @@ def main(args):
     }
 
     conn_str = {
-                "username": "admin",
-                "password": "XWq8TxeUxlUW3ipFJAP9",
-                "host": "ridgewooddbinstance.ckobuiicknns.us-east-2.rds.amazonaws.com",
-                "database": "ridgewood_dawn",
-                "port": 3306
+                "username": os.getenv('DB_USERNAME'),
+                "password": os.getenv('DB_PASSWORD'),
+                "host": os.getenv('DB_HOST'),
+                "database": os.getenv('DB_NAME'),
+                "port": int(os.getenv('DB_PORT'))
             }
 
     seller_ids = ["BTLUS", "Cube"]
