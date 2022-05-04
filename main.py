@@ -14,31 +14,36 @@ dotenv.load_dotenv()
 
 def get_args(args):
     if len(args) == 0:
-        raise NoArgsException('No arguments supplied')
-    
+        raise NoArgsException("No arguments supplied")
+
     parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--seller_ids")
+    return parser.parse_args(args)
 
 
 def main(args):
-    print(args)
+    args = get_args(args)
+
     dest_conn_str = {
-        'host': 'localhost',
-        'port': 3306,
-        'username': 'root',
-        'password': 'password',
-        'database': 'migration_test'
+        "host": "localhost",
+        "port": 3306,
+        "username": "root",
+        "password": "password",
+        "database": "migration_test",
     }
 
-    conn_str = {
-                "username": os.getenv('DB_USERNAME'),
-                "password": os.getenv('DB_PASSWORD'),
-                "host": os.getenv('DB_HOST'),
-                "database": os.getenv('DB_NAME'),
-                "port": int(os.getenv('DB_PORT'))
-            }
+    source_connection_data = {
+        "username": os.getenv("DB_USERNAME"),
+        "password": os.getenv("DB_PASSWORD"),
+        "host": os.getenv("DB_HOST"),
+        "database": os.getenv("DB_NAME"),
+        "port": int(os.getenv("DB_PORT")),
+    }
 
-    seller_ids = ["BTLUS", "Cube"]
-    with MySqlConnection(**conn_str) as source_connection, MySqlConnection(**dest_conn_str) as destination_connection:
+    seller_ids = args.seller_ids.split(',')
+    with MySqlConnection(
+        **source_connection_data
+    ) as source_connection, MySqlConnection(**dest_conn_str) as destination_connection:
         # Migrations for the tables
         table_migration = MySqlTableMigration(destination_connection.connection)
         table_migration.execute()
@@ -46,7 +51,6 @@ def main(args):
         # Migrations for the data
         migrations = MySqlDataMigration(source_connection, destination_connection)
         migrations.execute(seller_ids)
-        
 
 
 if __name__ == "__main__":
