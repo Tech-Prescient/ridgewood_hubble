@@ -29,7 +29,7 @@ class MySqlTableMigration(BaseTableMigration):
                 `spend` int DEFAULT NULL,
                 `seller_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
                 PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=168996 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
         """
 
     def get_inventory_summary_table_query(self):
@@ -65,7 +65,7 @@ class MySqlTableMigration(BaseTableMigration):
             `SellerId` varchar(50) NOT NULL,
             `CreatedAt` datetime DEFAULT NULL,
             PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB AUTO_INCREMENT=17659 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+            ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
         """
 
     def get_order_data_table_query(self):
@@ -105,7 +105,7 @@ class MySqlTableMigration(BaseTableMigration):
             `seller_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
             `modified_time` datetime DEFAULT NULL,
             PRIMARY KEY (`AmazonOrderId`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+            ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
         """
 
     def get_order_item_table_query(self):
@@ -137,7 +137,7 @@ class MySqlTableMigration(BaseTableMigration):
             KEY `ix_order_item_data_AmazonOrderId` (`AmazonOrderId`),
             KEY `order_item_data_SellerSKU_IDX` (`SellerSKU`,`ASIN`) USING BTREE,
             CONSTRAINT `order_item_data_ibfk_1` FOREIGN KEY (`AmazonOrderId`) REFERENCES `order_data` (`AmazonOrderId`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+            ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
         """
 
     def get_shipments_items_table_query(self):
@@ -157,7 +157,7 @@ class MySqlTableMigration(BaseTableMigration):
             PRIMARY KEY (`id`),
             KEY `ShipmentId` (`ShipmentId`),
             CONSTRAINT `shipment_items_ibfk_1` FOREIGN KEY (`ShipmentId`) REFERENCES `shipments` (`ShipmentId`)
-            ) ENGINE=InnoDB AUTO_INCREMENT=2095 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+            ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
         """
 
     def get_shipments_table_query(self):
@@ -185,7 +185,7 @@ class MySqlTableMigration(BaseTableMigration):
             `UpdatedAt` datetime DEFAULT NULL,
             `IsSeeded` tinyint(1) NOT NULL DEFAULT '0',
             PRIMARY KEY (`ShipmentId`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+            ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
         """
 
     def get_queries(self) -> Dict[TableList, str]:
