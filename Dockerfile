@@ -1,17 +1,13 @@
-FROM python:3.8-slim-buster
+FROM public.ecr.aws/lambda/python:3.8
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -p /opt/app || true
+COPY requirements.txt .
 
-WORKDIR /opt/app
+RUN pip3 install -r requirements.txt
 
-COPY requirements.txt /opt/app
-RUN pip install --no-cache-dir -r /opt/app/requirements.txt
+COPY . ${LAMBDA_TASK_ROOT}
 
-COPY . /opt/app
+CMD [ "main.handler" ]
 
-RUN chmod +x /opt/app/start.sh
-
-ENTRYPOINT ["/bin/sh"]

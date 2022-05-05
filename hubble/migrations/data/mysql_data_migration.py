@@ -149,11 +149,11 @@ class MySqlDataMigration(BaseDataMigration):
     def execute(self, seller_ids):
         migrations = {
             TableList.ADVERTISING_TABLE.value: self.migrate_advertising_data,
-            TableList.INVENTORY_SUMMARY_TABLE.value: self.migrate_advertising_data,
-            TableList.SHIPMENTS_TABLE.value: self.migrate_advertising_data,
-            TableList.SHIPMENT_ITEMS_TABLE.value: self.migrate_advertising_data,
-            TableList.ORDER_DATA_TABLE.value: self.migrate_advertising_data,
-            TableList.ORDER_ITEM_TABLE.value: self.migrate_advertising_data
+            TableList.INVENTORY_SUMMARY_TABLE.value: self.migrate_inventory_summary_data,
+            TableList.SHIPMENTS_TABLE.value: self.migrate_shipper_data,
+            TableList.SHIPMENT_ITEMS_TABLE.value: self.migrate_shipment_items_data,
+            TableList.ORDER_DATA_TABLE.value: self.migrate_order_data,
+            TableList.ORDER_ITEM_TABLE.value: self.migrate_order_items_data
         }
 
         sucessful_migration = 0
